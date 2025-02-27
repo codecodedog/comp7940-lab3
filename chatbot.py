@@ -50,7 +50,8 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("add", add))
     dispatcher.add_handler(CommandHandler("help", help_command))
-
+    dispatcher.add_handler(CommandHandler("hello", hello_command))
+    
     # To start the bot:
     updater.start_polling()
     updater.idle()
@@ -83,6 +84,13 @@ def add(update: Update, context: CallbackContext) -> None:
     
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /add <keyword>')
+
+def hello_command(update: Update, context: CallbackContext) -> None:
+    try:
+        name = context.args[0]  # /hello
+        update.message.reply_text(f'Good day, {name}!')
+    except (IndexError, ValueError):
+        update.message.reply_text('Usage: /hello <name>')
 
 
 if __name__ == '__main__':
